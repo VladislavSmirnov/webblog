@@ -1,0 +1,25 @@
+{% extends "webblogs/base.html" %}
+{% block content %}
+    <center><h3>Создать новый пост</h3></center>
+
+    <form class="form-horizontal" role="form" action="{% url 'webblogs:new_post'%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="author" class="col-sm-2 control-label">Пользователь</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="author" id="author" placeholder="Имя пользоателя" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="еуче" class="col-sm-2 control-label">Текст</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="text" id="text" placeholder="Текст сообщения" rows="10" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Создать</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "webblogs/base.html" %}
+{% block content %}
+
+        <h4>
+            <small>
+                <span class="glyphicon glyphicon-user"></span> {{ post.author }} |
+                <span class="glyphicon glyphicon-calendar"></span> {{ post.create_date|date }}
+                {% if post.create_date == post.change_date %}
+                    (Изменен: {{ post.change_date|date }})
+                {% endif %}
+            </small>
+        </h4>
+        <p class="lead">{{ post.text }}</p>
+        <form action = "{% url 'webblogs:delete' post.id%}" method = "post">
+            {%  csrf_token %}
+            <a role="button" class="btn btn-default" href="{% url 'webblogs:edit' post.id %}"><span class="glyphicon glyphicon-pencil"></span> Редактировать пост</a>
+            <button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Удалить пост</button>
+        </form>
+        <h2><small>Комментарии ({{ post.comment_set.count }})</small></h2>
+        <div class="form-group">
+        <a class="form">Комменитровать</a>
+        <div class="form-comment">
+            <form action="{% url 'webblogs:detail' post.id%}" method="post" class="form-group">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="None"/>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="author" id="author" placeholder="Пользователь" required/>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required/>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="text" id="text" placeholder="Текст сообщения" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-default">Отправить</button>
+            </form>
+        </div>
+        </div>
+        {% for comment in post.comment_set.all%}
+            {% if comment.comment == None %}
+                {% include "webblogs/comment.html" %}
+            {% endif %}
+        {% endfor %}
+{% endblock %}

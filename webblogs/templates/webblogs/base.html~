@@ -1,0 +1,10 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+ <head>
+ </head>
+ <body>
+Hellow World
+  {% block content %}{% endblock %}
+ </body>
+</html>

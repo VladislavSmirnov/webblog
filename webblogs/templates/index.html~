@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% if posts %}
+    <ul>
+    {% for question in posts %}
+        <li><a href="/polls/{{ question.id }}/">{{ question.text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+{% endblock %}
